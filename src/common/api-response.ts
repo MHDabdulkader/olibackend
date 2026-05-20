@@ -4,7 +4,9 @@ export class ApiResponse<T>{
   data: T;
   timestamp: string;
   pagination?: PaginationMeta;
+  success: boolean;
   constructor(
+    success: boolean,
     statusCode: number,
     message: string,
     data: T,
@@ -18,7 +20,9 @@ export class ApiResponse<T>{
     this.pagination= pagination
   }
 
-  static success<T>(data: T, message: "Success")
+  static success<T>(data: T, message:string = "Success"){
+
+  }
 }
 
 export interface PaginationMeta{

@@ -4,6 +4,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { RegisterDto } from "./dto/register.dto";
 import * as bcrypt from "bcrypt"
 import { LoginDto } from "./dto/login.dto";
+import { ApiResponse } from "src/common/api-response";
 
 @Injectable()
 export class AuthService {
@@ -35,10 +36,11 @@ export class AuthService {
     })
 
     const {password, ...result} = user;
-    return {
+
+    return ApiResponse.create({
       user: result, 
       token: await this.signToken(user.id, user.email)
-    }
+    }, "User registered successfully")
   }
 
   async login (dto: LoginDto){
@@ -55,10 +57,10 @@ export class AuthService {
     if(!valid) throw new UnauthorizedException("Invalid credentials");
 
     const {password, ...rest} = user;
-    return {
+    return ApiResponse.success({
       user: rest,
       token: await this.signToken(user.id, user.email)
-    }
+    }, "Login successful")
   }
 
   async me(user_id: string){
@@ -68,7 +70,7 @@ export class AuthService {
     if(!user) throw new UnauthorizedException("User not founded");
 
     const {password, ...result} = user;
-    return result;
+    return ApiResponse.success(result, "Profile fetch successful");
   }
 
   private async signToken(user_id: string, email: string){

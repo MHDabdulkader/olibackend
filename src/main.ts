@@ -17,6 +17,7 @@ async function bootstrap() {
                 .setTitle("Olistami Api")
                 .setDescription("Api documentation")
                 .setVersion("1.0.0")
+                
                 .addBearerAuth({
                   type: "http",
                   scheme: "bearer",

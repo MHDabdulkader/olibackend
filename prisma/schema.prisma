@@ -23,6 +23,14 @@ model User {
   password  String
   name      String?
   role      Role     @default(USER)
+
+  // __ Verification __________________
+  isVerified Boolean @default(false)
+  otp        String?
+  otpExpireAt DateTime?
+
+
+  // __ Time __________________________
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
